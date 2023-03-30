@@ -128,4 +128,3 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     );
   }
 }
-
