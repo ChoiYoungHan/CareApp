@@ -1,4 +1,5 @@
 import 'package:care_application/main.dart';
+import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea( // MediaQuery를 통해 앱의 실제 화면 크기를 계산하고 이를 영역으로 삼아 내용을 표시
         child: Column( // 세로 정렬
           mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, // 자식 위젯들이 수직 방향으로 가운데 정렬하게 함
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -90,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 15), // 좌 20 상 0 우 20 하 15의 여백을 줌
                   child: ElevatedButton( // 버튼 위젯
                       onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register_Page()));
                       },
                       child: Text('회원가입'), // 텍스트로 '회원가입' 출력
                       style: ButtonStyle( // 버튼의 스타일 지정

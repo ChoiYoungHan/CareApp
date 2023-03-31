@@ -31,7 +31,6 @@ class _Calendar_PageState extends State<Calendar_Page> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white, // 배경색: 흰색
-        leading: Icon(Icons.arrow_back, color: Colors.grey), // 상단바의 좌측에 뒤로가기 아이콘 추가, 색상은 회색
         title: Text('캘린더', style: TextStyle(color: Colors.grey)) // 제목을 '캘린더'로 한다. 색상은 회색
       ),
       body: SafeArea( // MediaQuery를 통해 앱의 실제 화면 크기를 계산하고 이를 영역으로 삼아 내용을 표시
@@ -79,8 +78,39 @@ class _Calendar_PageState extends State<Calendar_Page> {
           ),
         )
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: BottomAppBar( // 하단 바
+        child: Container( // 상자 위젯
+          height: 60, // 높이 60
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 일정 간격을 두고 정렬
+            children: [
+              IconButton( // 아이콘 버튼 위젯
+                onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
 
+                },
+                icon: Icon(Icons.home_outlined) // 홈 아이콘
+              ),
+              IconButton( // 아이콘 버튼 위젯
+                onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
+
+                },
+                icon: Icon(Icons.event_note_outlined, color: Colors.blue) // 다이어리 아이콘
+              ),
+              IconButton( // 아이콘 버튼 위젯
+                onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
+
+                },
+                icon: Icon(Icons.chat_outlined) // 채팅 아이콘
+              ),
+              IconButton( // 아이콘 버튼 위젯
+                onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
+
+                },
+                icon: Icon(Icons.list_alt_outlined) // 리스트 아이콘
+              )
+            ]
+          )
+        )
       )
     );
   }
