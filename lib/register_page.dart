@@ -1,3 +1,4 @@
+import 'package:care_application/login_page.dart';
 import 'package:flutter/material.dart';
 
 class Register_Page extends StatelessWidget {
@@ -37,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: Colors.white, // 배경색 흰색
         leading: IconButton( // 아이콘 버튼 위젯
           onPressed: (){
-
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
           },
           icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 아이콘, 색상은 회색
         ),

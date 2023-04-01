@@ -2,6 +2,8 @@ import 'package:care_application/main.dart';
 import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
 
+import 'find_ID.dart';
+
 void main() {
   runApp(const Login_Page());
 }
@@ -103,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 0), // 좌 20 상 0 우 20 하 15의 여백을 줌
                   child: TextButton( // 텍스트 버튼 위젯
                     onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Find_ID()));
                     },
                     child: Text('아이디/비밀번호 찾기', // 텍스트로 '아이디/비밀번호 찾기' 출력
                       style: TextStyle( // 텍스트 스타일 지정
