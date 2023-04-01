@@ -1,3 +1,4 @@
+import 'package:care_application/find_PW.dart';
 import 'package:care_application/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,7 @@ class _FindIDState extends State<FindID> {
             ),
             TextButton( // 텍스트 버튼 위젯
               onPressed: (){ // 비밀번호 찾기 버튼 클릭 시 수행할 코드 작성
-
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Find_PW()));
               },
               child: Text('비밀번호 찾기', // 텍스트 위젯, '비밀번호 찾기' 문구 출력
                 style: TextStyle( // 텍스트 디자인 설정
@@ -73,7 +74,7 @@ class _FindIDState extends State<FindID> {
         child: Padding( // 여백을 주기 위해 사용하는 위젯
           padding: EdgeInsets.fromLTRB(20, 15, 20, 5), // 좌 20 상 15 우 20 하 5의 여백을 줌
           child: Column( // 세로 정렬
-            mainAxisAlignment: MainAxisAlignment.start, // 자식 위젯들이 수직 방향으로 가운데 정렬하도록 함
+            mainAxisAlignment: MainAxisAlignment.start, // 자식 위젯들이 영역의 처음부터 순서대로 정렬되게 함
             mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
             children: [
               Align( // 정렬하기 위해 사용하는 위젯
@@ -128,7 +129,7 @@ class _FindIDState extends State<FindID> {
               TextField( // 텍스트 필드 위젯
                 controller: inputEmail, // 입력받은 값은 변수 inputEmail에 저장
                 decoration: InputDecoration( // 디자인
-                  hintText: '이름을 입력해주세요.',
+                  hintText: '이메일을 입력해주세요.',
                   border: OutlineInputBorder( // 모서리에 테두리를 줄 것임
                     borderSide: BorderSide(color: Colors.grey) // 테두리의 색상은 회색
                   ),
@@ -154,8 +155,7 @@ class _FindIDState extends State<FindID> {
                 style: ButtonStyle( // 버튼의 스타일 설정
                   minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)) // 버튼의 가로는 최대, 세로는 50
                 )
-              ),
-
+              )
             ]
           )
         )
