@@ -1,3 +1,4 @@
+import 'package:care_application/home_page.dart';
 import 'package:care_application/main.dart';
 import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 15), // 좌 20 상 0 우 20 하 15의 여백을 줌
                   child: ElevatedButton( // 버튼 위젯
                     onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
                     },
                     child: Text('로그인'), // 텍스트로 '로그인' 출력
                     style: ButtonStyle( // 버튼의 스타일 지정

@@ -1,3 +1,4 @@
+import 'package:care_application/home_page.dart';
 import 'package:care_application/input_diary.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -86,7 +87,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
                 },
                 icon: Icon(Icons.home_outlined) // 홈 아이콘
               ),
