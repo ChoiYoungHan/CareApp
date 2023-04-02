@@ -32,31 +32,31 @@ class _HomePageState extends State<HomePage> {
           child: Column( // 세로 정렬
             children: [
               exist == 1 ?
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 2)
+              Padding( // 여백을 주기 위해 사용하는 위젯
+                padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                child: Container( // 상자 위젯
+                  width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%를 너비로 설정
+                  height: MediaQuery.of(context).size.height * 0.3, // 화면 세로 길이의 30%를 높이로 설정
+                  decoration: BoxDecoration( // 상자 위젯 디자인
+                    border: Border.all(color: Colors.grey, width: 2) // 상자의 테두리 회색, 두께 2
                   ),
-                  child: Row(
+                  child: Row( // 가로 정렬
                     mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Image.asset('assets/newborn.png',
-                          width: MediaQuery.of(context).size.width * 0.38,
-                          height: MediaQuery.of(context).size.height * 0.45
+                      Padding( // 여백을 주기 위해 사용하는 위젯
+                        padding: EdgeInsets.all(20), // 모든 면의 여백을 20만큼 줌
+                        child: Image.asset('assets/newborn.png', // 이미지 가져오기
+                          width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%를 너비로 설정
+                          height: MediaQuery.of(context).size.height * 0.45 // 화면 세로 길이의 45%를 높이로 설정
                         )
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.422,
-                          child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Column(
+                      Padding( // 여백을 주기 위해 사용하는 위젯
+                        padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
+                        child: Container( // 상자 위젯
+                          width: MediaQuery.of(context).size.width * 0.422, // 화면 가로 길이의 42%를 너비로 설정
+                          child: Padding( // 여백을 주기 위해 사용하는 위젯
+                            padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
+                            child: Column( // 세로 정렬
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -76,76 +76,76 @@ class _HomePageState extends State<HomePage> {
                   )
                 ),
               ) : 
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 2)
+              Padding( // 여백을 주기 위해 사용하는 위젯
+                padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                child: Container( // 상자 위젯
+                  width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%만큼 너비를 줌
+                  height: MediaQuery.of(context).size.width * 0.5, // 화면 세로 길이의 50%만큼 높이를 줌
+                  decoration: BoxDecoration( // 박스 디자인
+                    border: Border.all(color: Colors.grey, width: 2) // 박스 테두리 회색, 두께 2
                   ),
-                  child: Column(
+                  child: Column( // 세로정렬
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Image.asset('assets/baby.png',
-                          width: MediaQuery.of(context).size.width * 0.38,
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          color: Colors.grey
+                      Padding( // 여백을 주기 위해 사용하는 위젯
+                        padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                        child: Image.asset('assets/baby.png', // 이미지를 불러옴
+                          width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%만큼 너비를 줌
+                          height: MediaQuery.of(context).size.height * 0.2, // 화면 세로 길이의 20%만큼 높이를 줌
+                          color: Colors.grey // 색상은 회색
                         ),
                       ),
-                      Text('아기 등록하기', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold))
+                      Text('아기 등록하기', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 색상은 회색, 크기 20, 볼드체
                     ],
                   ),
                 ),
               ),
-              Row(
+              Row( // 가로 정렬
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 2)
+                  Padding( // 여백을 주기 위해 사용하는 위젯
+                    padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                    child: Container( // 상자 위젯
+                      width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
+                      height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%만큼 높이를 줌
+                      decoration: BoxDecoration( // 박스 디자인
+                        border: Border.all(color: Colors.grey, width: 2) // 화면 테두리 회색, 두께 2
                       ),
-                      child: Column(
+                      child: Column( // 세로 정렬
                         children: [
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Image.asset('assets/week_baby.png',
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              color: Colors.grey
-                            )
+                          Padding( // 여백을 주기 위해 사용하는 위젯
+                            padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                            child: Image.asset('assets/week_baby.png', // 이미지를 불러옴
+                              width: MediaQuery.of(context).size.width * 0.35, // 화면 가로 길이의 35%만큼 너비를 줌
+                              height: MediaQuery.of(context).size.height * 0.15, // 화면 높이 길이의 15%만큼 높이를 줌
+                              color: Colors.grey // 색상은 회색
+                           )
                           ),
-                          Text('이번주 아기는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold))
+                          Text('이번주 아기는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색은 회색, 크기 20, 볼드체
                         ]
                       )
                     )
                   ),
-                  Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        height: MediaQuery.of(context).size.height * 0.25,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 2)
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Image.asset('assets/week_mother.png',
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                height: MediaQuery.of(context).size.height * 0.15,
-                                color: Colors.grey
-                              )
-                            ),
-                            Text('이번주 엄마는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold))
-                          ]
-                        )
+                  Padding( // 여백을 주기 위해 사용하는 위젯
+                    padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                    child: Container( // 상자 위젯
+                      width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
+                      height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%만큼 높이를 줌
+                      decoration: BoxDecoration( // 박스 디자인
+                        border: Border.all(color: Colors.grey, width: 2) // 테두리 회색, 두께 2
+                      ),
+                      child: Column( // 세로 정렬
+                        children: [
+                          Padding( // 여백을 주기 위해 사용하는 위젯
+                            padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                            child: Image.asset('assets/week_mother.png', // 이미지 불러오기
+                              width: MediaQuery.of(context).size.width * 0.35, // 화면 가로 길이의 35%만큼 너비를 줌
+                              height: MediaQuery.of(context).size.height * 0.15, // 화면 세로 길이의 15%만큼 높이를 줌
+                              color: Colors.grey // 색상은 회색
+                            )
+                          ),
+                          Text('이번주 엄마는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색 회색, 크기 20, 볼드체
+                        ]
                       )
+                    )
                   )
                 ]
               )
