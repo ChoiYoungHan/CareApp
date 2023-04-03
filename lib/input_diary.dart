@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:care_application/login_page.dart';
 import 'package:care_application/main.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,6 +43,17 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     if(images != null){
       setState(() {
         imageList = images;
+      });
+    }
+  }
+
+  // 비동기 처리를 통해 카메라로 촬영해서 이미지를 가져옴
+  Future<void> getCamera() async {
+    final XFile? images = await picker.pickImage(source: ImageSource.camera);
+
+    if(images != null){
+      setState(() {
+        imageList.add(images);
       });
     }
   }
@@ -97,7 +109,82 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                       height: MediaQuery.of(context).size.width * 0.3, // 화면 가로 길이의 30%를 높이로 설정
                       child: ElevatedButton( // 버튼 위젯
                         onPressed: (){ // 동작을 위해 필요한 코드를 작성
-                          getImage(); // getImage() 메소드 호출
+                          showModalBottomSheet( // 화면의 아래에 모달시트를 보여줌
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container( // 상자 위젯 반환
+                                decoration: BoxDecoration( // 디자인
+                                  color: Colors.white, // 색상은 흰색
+                                  borderRadius: BorderRadius.circular(10) // 모서리를 10만큼 둥글게
+                                ),
+                                height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%를 높이로 설정
+                                child: Center( // 가운데에 배치하는 위젯
+                                  child: Row( // 가로 정렬
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 일정한 간격을 두고 배치
+                                    mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
+                                    children: [
+                                      InkWell( // 터치 이벤트를 처리할 수 없는 위젯을 감싸서 터치 이벤트를 처리할 수 있도록 하는 위젯
+                                        onTap: (){ // 한 번 클릭할 경우
+                                          getCamera(); // getCamera() 메소드 호출
+                                        },
+                                        child: Padding( // 여백을 주기 위해 사용하는 위젯
+                                          padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                                          child: Container( // 상자 위젯
+                                            width: MediaQuery.of(context).size.width * 0.4, // 화면 가로 길이의 40%를 너비를 줌
+                                            decoration: BoxDecoration( // 상자 디자인
+                                              borderRadius: BorderRadius.circular(10), // 네 면의 모서리를 10만큼 둥글게 함
+                                              border: Border.all(color: Colors.grey, width: 2) // 테두리 색상은 회색, 두께는 2
+                                            ),
+                                            child: Column( // 세로 정렬
+                                              children: [
+                                                Padding( // 여백을 주기 위해 사용하는 위젯
+                                                  padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                                                  child: Image.asset('assets/camera.png', // 사진 이미지 불러오기
+                                                    width: MediaQuery.of(context).size.width * 0.2, // 화면 가로 길이의 20%만큼 너비를 줌
+                                                    height: MediaQuery.of(context).size.height * 0.13, // 화면 세로 길이의 13%만큼 높이를 줌
+                                                    color: Colors.grey // 색상은 회색
+                                                  )
+                                                ),
+                                                Text('카메라', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색은 회색, 크기 20, 볼드체
+                                              ]
+                                            )
+                                          )
+                                        )
+                                      ),
+                                      InkWell( // 터치 이벤트를 처리할 수 없는 위젯을 감싸서 터치 이벤트를 처리할 수 있도록 하는 위젯
+                                        onTap: (){ // 한 번 클릭할 경우
+                                          getImage(); // getImage() 메소드 호출
+                                        },
+                                        child: Padding( // 여백을 주기 위해 사용하는 위젯
+                                          padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                                          child: Container( // 상자 위젯
+                                            width: MediaQuery.of(context).size.width * 0.4, // 화면 가로 길이의 40%를 너비로 줌
+                                            decoration: BoxDecoration( // 상자 디자인
+                                              borderRadius: BorderRadius.circular(10), // 네 면의 모서리를 10만큼 둥글게 함
+                                              border: Border.all(color: Colors.grey, width: 2) // 테두리는 회색, 두께는 2
+                                            ),
+                                            child: Column( // 세로 정렬
+                                              children: [
+                                                Padding( // 여백을 주기 위해 사용하는 위젯
+                                                  padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                                                  child: Image.asset('assets/gallery.png', // 갤러리 이미지 불러오기
+                                                    width: MediaQuery.of(context).size.width * 0.2, // 화면 가로 길이의 20%만큼 너비를 줌
+                                                    height: MediaQuery.of(context).size.height * 0.13, // 화면 세로 길이의 13%만큼 높이를 줌줌
+                                                    color: Colors.grey // 색상은 회색
+                                                  )
+                                                ),
+                                                Text('갤러리', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 색상은 회색, 크기 20, 볼드체
+                                              ]
+                                            )
+                                          )
+                                        )
+                                      )
+                                    ]
+                                  ) 
+                                )
+                              );
+                            }
+                          );
                         },
                         child: Icon(Icons.add_box_outlined) // 아이콘 위젯
                       ),
