@@ -1,4 +1,5 @@
 import 'package:care_application/main.dart';
+import 'package:care_application/week_info.dart';
 import 'package:flutter/material.dart';
 
 class Home_Page extends StatelessWidget {
@@ -103,25 +104,30 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Padding( // 여백을 주기 위해 사용하는 위젯
                     padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                    child: Container( // 상자 위젯
-                      width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
-                      height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%만큼 높이를 줌
-                      decoration: BoxDecoration( // 박스 디자인
-                        border: Border.all(color: Colors.grey, width: 2) // 화면 테두리 회색, 두께 2
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info()));
+                      },
+                      child: Container( // 상자 위젯
+                        width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
+                        height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%만큼 높이를 줌
+                        decoration: BoxDecoration( // 박스 디자인
+                          border: Border.all(color: Colors.grey, width: 2) // 화면 테두리 회색, 두께 2
+                        ),
+                        child: Column( // 세로 정렬
+                          children: [
+                            Padding( // 여백을 주기 위해 사용하는 위젯
+                              padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                              child: Image.asset('assets/week_baby.png', // 이미지를 불러옴
+                                width: MediaQuery.of(context).size.width * 0.35, // 화면 가로 길이의 35%만큼 너비를 줌
+                                height: MediaQuery.of(context).size.height * 0.15, // 화면 높이 길이의 15%만큼 높이를 줌
+                                color: Colors.grey // 색상은 회색
+                             )
+                            ),
+                            Text('이번주 아기는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색은 회색, 크기 20, 볼드체
+                          ]
+                        )
                       ),
-                      child: Column( // 세로 정렬
-                        children: [
-                          Padding( // 여백을 주기 위해 사용하는 위젯
-                            padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                            child: Image.asset('assets/week_baby.png', // 이미지를 불러옴
-                              width: MediaQuery.of(context).size.width * 0.35, // 화면 가로 길이의 35%만큼 너비를 줌
-                              height: MediaQuery.of(context).size.height * 0.15, // 화면 높이 길이의 15%만큼 높이를 줌
-                              color: Colors.grey // 색상은 회색
-                           )
-                          ),
-                          Text('이번주 아기는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색은 회색, 크기 20, 볼드체
-                        ]
-                      )
                     )
                   ),
                   Padding( // 여백을 주기 위해 사용하는 위젯

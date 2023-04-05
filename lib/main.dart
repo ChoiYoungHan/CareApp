@@ -29,8 +29,8 @@ class _Calendar_PageState extends State<Calendar_Page> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Scaffold( // 상 중 하를 나누는 위젯
+      appBar: AppBar( // 상단 바
         automaticallyImplyLeading: false, // 뒤로가기 버튼이 자동으로 생성되는 것을 방지
         backgroundColor: Colors.white, // 배경색: 흰색
         title: Text('캘린더', style: TextStyle(color: Colors.grey)) // 제목을 '캘린더'로 한다. 색상은 회색

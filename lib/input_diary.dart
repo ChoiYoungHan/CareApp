@@ -114,7 +114,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                             builder: (BuildContext context) {
                               return Container( // 상자 위젯 반환
                                 decoration: BoxDecoration( // 디자인
-                                  color: Colors.white, // 색상은 흰색
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(10) // 모서리를 10만큼 둥글게
                                 ),
                                 height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%를 높이로 설정
