@@ -1,5 +1,6 @@
 import 'package:care_application/home_page.dart';
 import 'package:care_application/input_diary.dart';
+import 'package:care_application/timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -33,7 +34,20 @@ class _Calendar_PageState extends State<Calendar_Page> {
       appBar: AppBar( // 상단 바
         automaticallyImplyLeading: false, // 뒤로가기 버튼이 자동으로 생성되는 것을 방지
         backgroundColor: Colors.white, // 배경색: 흰색
-        title: Text('캘린더', style: TextStyle(color: Colors.grey)) // 제목을 '캘린더'로 한다. 색상은 회색
+        title: Text('캘린더', style: TextStyle(color: Colors.grey)), // 제목을 '캘린더'로 한다. 색상은 회색
+        actions: [ // 상단바의 우측에 출력
+          Center( // 가운데 정렬 위젯
+            child: Padding( // 여백을 주기 위해 사용하는 위젯
+              padding: EdgeInsets.fromLTRB(0, 0, 10, 0), // 우측에만 10의 여백을 줌
+              child: IconButton( // 아이콘 버튼 위젯
+                onPressed: (){ // 아이콘을 클릭할 경우에 동작할 코드
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Time_Line()));
+                },
+                icon: Icon(Icons.view_timeline_outlined, color: Colors.orange) // 타임라인 아이콘, 색상은 주황
+              )
+            )
+          )
+        ]
       ),
       body: SafeArea( // MediaQuery를 통해 앱의 실제 화면 크기를 계산하고 이를 영역으로 삼아 내용을 표시
         child: GestureDetector( // Container와 같이 Gesture를 감지할 수 없는 위젯들에게 Gesture 기능을 부여할 수 있는 위젯
