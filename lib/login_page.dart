@@ -2,10 +2,11 @@ import 'package:care_application/home_page.dart';
 import 'package:care_application/main.dart';
 import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'find_ID.dart';
 
-void main() {
+void main() async {
   runApp(const Login_Page());
 }
 

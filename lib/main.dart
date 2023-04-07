@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:care_application/home_page.dart';
 import 'package:care_application/input_diary.dart';
 import 'package:care_application/timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -28,24 +31,115 @@ class _Calendar_PageState extends State<Calendar_Page> {
   late DateTime selectedDate = DateTime.now(); // 현재 날짜를 저장할 변수
   DateTime? beforeselectedDate = null; // 이전에 선택한 날짜를 저장할 변수
 
+  void showAddAlarm(BuildContext context) async {
+    // 선택한 날짜와 시간, 일정 내용을 저장할 변수
+    DateTime selectedDate = DateTime.now();
+    TimeOfDay selectedTime = TimeOfDay.now();
+    String schedule = '';
+
+    // 팝업을 띄운 뒤 캘린더에서 선택한 날짜를 저장한다.
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder( // setState함수가 호출될 때 팝업도 다시 빌드하기 위해 사용
+          builder: (BuildContext context, StateSetter setState){
+            return Container( // 상자 위젯
+              height: MediaQuery.of(context).size.height * 0.45,
+              child: Column( // 세로 정렬
+                children: [
+                  Card( // 카드 위젯
+                    child: ListTile( // 리스트 타일 위젯
+                      title: Text('날짜 선택'), // 텍스트 '날짜 선택' 출력
+                      subtitle: Text("${DateFormat('yyyy/MM/dd').format(selectedDate)}"), // 아래에 선택한 날짜 정보를 출력
+                      onTap: () async {
+                        final DateTime ? pickedDate = await showDatePicker( // showDatePicker 함수를 호출하여 팝업 창을 띄움
+                          context: context,
+                          initialDate: selectedDate, // 팝업이 띄워졌을 때, 초기화하는 날짜 값
+                          firstDate: DateTime.utc(2020, 12, 31), // 선택 가능한 가장 빠른 날짜
+                          lastDate: DateTime.utc(2123, 12, 31) // 선택 가능한 가장 늦은 날짜
+                        );
+
+                        // 팝업에서 선택한 날짜가 현재 선택된 날짜와 다르다면, selectedDate를 업데이트함
+                        if(pickedDate != null && pickedDate != selectedDate){
+                          setState(() {
+                            selectedDate = pickedDate;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      title: TextField(
+                        decoration: InputDecoration(hintText: '일정을 입력해주세요.'),
+                        onChanged: (value){
+                          setState((){
+                            schedule = value;
+                          });
+                        }
+                      ),
+                    )
+                  ),
+                  Card(
+                    child: ListTile(
+                      title: Text('시간 등록'),
+                      subtitle: Text("${selectedTime.hour.toString().padLeft(2, '0')}시${selectedTime.minute.toString().padLeft(2, '0')}분"),
+                      onTap: () async {
+                        final TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: selectedTime
+                        );
+
+                        if(pickedTime != null && pickedTime != selectedTime){
+                          setState(() {
+                            selectedTime = pickedTime;
+                          });
+                        }
+                      },
+                    )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: ElevatedButton(
+                      onPressed: (){
+
+                      },
+                      child: Text('완료'),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+                      ),
+                    )
+                  )
+                ]
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold( // 상 중 하를 나누는 위젯
+      resizeToAvoidBottomInset: false, // 화면 밀림 방지
       appBar: AppBar( // 상단 바
         automaticallyImplyLeading: false, // 뒤로가기 버튼이 자동으로 생성되는 것을 방지
         backgroundColor: Colors.white, // 배경색: 흰색
         title: Text('캘린더', style: TextStyle(color: Colors.grey)), // 제목을 '캘린더'로 한다. 색상은 회색
         actions: [ // 상단바의 우측에 출력
-          Center( // 가운데 정렬 위젯
-            child: Padding( // 여백을 주기 위해 사용하는 위젯
-              padding: EdgeInsets.fromLTRB(0, 0, 10, 0), // 우측에만 10의 여백을 줌
-              child: IconButton( // 아이콘 버튼 위젯
-                onPressed: (){ // 아이콘을 클릭할 경우에 동작할 코드
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Time_Line()));
-                },
-                icon: Icon(Icons.view_timeline_outlined, color: Colors.orange) // 타임라인 아이콘, 색상은 주황
-              )
-            )
+          IconButton( // 아이콘 버튼 위젯
+            onPressed: (){ // 아이콘을 클릭할 경우에 동작할 코드
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Time_Line()));
+            },
+            icon: Icon(Icons.view_timeline_outlined, color: Colors.orange) // 타임라인 아이콘, 색상은 주황
+          ),
+          IconButton(
+            onPressed: (){
+              showAddAlarm(context);
+            },
+            icon: Icon(Icons.alarm_rounded, color: Colors.orange)
           )
         ]
       ),
@@ -54,7 +148,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
           child: TableCalendar( // 캘린더 위젯
             firstDay: DateTime.utc(2020, 01, 01), // 달력에서 사용할 수 있는 첫 번째 날짜
             lastDay: DateTime.utc(2123, 12, 31), // 달력에서 사용할 수 있는 마지막 날짜
-            focusedDay: DateTime.now(), // 달력에서 현재 표시되어야 하는 월을 결정하는 현재 목표 날짜
+            focusedDay: selectedDate ?? DateTime.now(), // 달력에서 현재 표시되어야 하는 월을 결정하는 현재 목표 날짜
 
             // 선택한 날짜 정보를 selectedDay 매개변수로 전달받은 뒤, selectedDate 필드에 저장한다.
             onDaySelected: (selectedDay, focusedDay) {
