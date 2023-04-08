@@ -1,5 +1,7 @@
 import 'package:care_application/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Register_Page extends StatelessWidget {
   const Register_Page({Key? key}) : super(key: key);
@@ -29,6 +31,31 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController inputName = new TextEditingController();
   TextEditingController inputPhone = new TextEditingController();
   TextEditingController inputEmail = new TextEditingController();
+  
+  Future<void> sendData() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/register');
+    final headers = {'Content-Type': 'application/json'};
+    
+    final ID = inputID.text;
+    final PW = inputPW.text;
+    final Name = inputName.text;
+    final Phone = inputPhone.text;
+    final Email = inputEmail.text;
+    
+    final body = jsonEncode({'id': ID, 'pw': PW, 'name': Name, 'phone': Phone, 'email': Email});
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+      inputID.clear();
+      inputPW.clear();
+      inputCheckPW.clear();
+      inputName.clear();
+      inputPhone.clear();
+      inputEmail.clear();
+    } else {
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +200,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 5), // 높이 5만큼의 공간을 줌
                 ElevatedButton( // 버튼 위젯
                   onPressed: (){
-                    
+                    sendData();
                   }, 
                   child: Text('회원가입 신청'),
                   style: ButtonStyle(
