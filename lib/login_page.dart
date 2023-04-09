@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:care_application/home_page.dart';
-import 'package:care_application/main.dart';
 import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:http/http.dart' as http;
 import 'find_ID.dart';
 
 void main() async {
@@ -16,6 +16,9 @@ class Login_Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/HomePage' : (context) => Home_Page()
+      },
       debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
       home: LoginPage()
     );
@@ -35,7 +38,29 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController inputID = TextEditingController();
   TextEditingController inputPW = TextEditingController();
 
+  Future<void> sendData() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/login');
+    final headers = {'Content-Type': 'application/json'};
+    final id = inputID.text;
+    final pw = inputPW.text;
+    final body = jsonEncode({'id': id, 'pw': pw});
+    final response = await http.post(uri, headers: headers, body: body);
 
+    if(response.statusCode == 200){
+
+      var jsonData = jsonDecode(response.body);
+
+      if(jsonData['success'] == true){
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
+      } else {
+
+      }
+      inputID.clear();
+      inputPW.clear();
+    } else {
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold( // 상 중 하를 나누는 위젯
@@ -82,8 +107,37 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 15), // 좌 20 상 0 우 20 하 15의 여백을 줌
                   child: ElevatedButton( // 버튼 위젯
-                    onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
+                    onPressed: () async { // 버튼을 누를 시 동작할 코드 작성
+
+
+                      if(inputID.text == '' || inputPW.text == ''){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Center(child: Text('오류메시지', style: TextStyle(color: Colors.grey))),
+                              content: Container(
+                                height: 30,
+                                child: Center(child: Text('공백 없이 입력해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17))),
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('확인'),
+                                  style: ButtonStyle( // 버튼의 스타일 지정
+                                    minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)) // 버튼의 가로를 최대, 세로는 50
+                                  )
+                                )
+                              ]
+                            );
+                          }
+                        );
+                      } else {
+                        sendData();
+                      }
+
                     },
                     child: Text('로그인'), // 텍스트로 '로그인' 출력
                     style: ButtonStyle( // 버튼의 스타일 지정
