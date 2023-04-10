@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:care_application/login_page.dart';
 import 'package:care_application/main.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class input_diary extends StatelessWidget {
   const input_diary({Key? key, required this.selectedDate}) : super(key: key);
@@ -44,6 +44,23 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       setState(() {
         imageList = images;
       });
+    }
+  }
+
+  Future<void> uploadImages() async {
+    String url = 'http://182.219.226.49/upload';
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    for(var imageFile in imageList){
+      request.files.add(await http.MultipartFile.fromPath('images', imageFile.path));
+    }
+
+    var response = await request.send();
+
+    if(response.statusCode == 200){
+      print('Image Upload');
+      imageList.clear(); // 이미지 업로드가 성공하면 배열을 초기화
+    } else {
+      print('Upload Failed');
     }
   }
 
@@ -124,8 +141,11 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                                     mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
                                     children: [
                                       InkWell( // 터치 이벤트를 처리할 수 없는 위젯을 감싸서 터치 이벤트를 처리할 수 있도록 하는 위젯
-                                        onTap: (){ // 한 번 클릭할 경우
-                                          getCamera(); // getCamera() 메소드 호출
+                                        onTap: () async { // 한 번 클릭할 경우
+                                          await getCamera(); // getCamera() 메소드 호출
+                                          if(imageList.isNotEmpty){
+                                            await uploadImages();
+                                          }
                                         },
                                         child: Padding( // 여백을 주기 위해 사용하는 위젯
                                           padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
@@ -152,8 +172,11 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                                         )
                                       ),
                                       InkWell( // 터치 이벤트를 처리할 수 없는 위젯을 감싸서 터치 이벤트를 처리할 수 있도록 하는 위젯
-                                        onTap: (){ // 한 번 클릭할 경우
-                                          getImage(); // getImage() 메소드 호출
+                                        onTap: () async { // 한 번 클릭할 경우
+                                          await getImage(); // getImage() 메소드 호출
+                                          if(imageList.isNotEmpty){
+                                            await uploadImages();
+                                          }
                                         },
                                         child: Padding( // 여백을 주기 위해 사용하는 위젯
                                           padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌

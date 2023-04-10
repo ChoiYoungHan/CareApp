@@ -136,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       } else {
                         sendData();
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
                       }
 
                     },
