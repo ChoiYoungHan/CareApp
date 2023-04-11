@@ -200,7 +200,34 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 5), // 높이 5만큼의 공간을 줌
                 ElevatedButton( // 버튼 위젯
                   onPressed: (){
-                    sendData();
+                    if(inputID.text == '' || inputPW.text == '' || inputCheckPW.text == '' || inputName.text == '' || inputPhone.text == '' || inputEmail.text == ''){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Center(child: Text('오류메시지', style: TextStyle(color: Colors.grey))),
+                            content: Container(
+                              height: 30,
+                            child: Center(child: Text('공백 없이 입력해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17))),
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('확인'),
+                                style: ButtonStyle( // 버튼의 스타일 지정
+                                  minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)) // 버튼의 가로를 최대, 세로는 50
+                                )
+                              )
+                            ]
+                          );
+                        }
+                      );
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
+                      sendData();
+                    }
                   }, 
                   child: Text('회원가입 신청'),
                   style: ButtonStyle(

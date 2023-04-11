@@ -108,8 +108,6 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 15), // 좌 20 상 0 우 20 하 15의 여백을 줌
                   child: ElevatedButton( // 버튼 위젯
                     onPressed: () async { // 버튼을 누를 시 동작할 코드 작성
-
-
                       if(inputID.text == '' || inputPW.text == ''){
                         showDialog(
                           context: context,
