@@ -103,6 +103,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
       var jsonData = jsonDecode(response.body);
 
+      if(jsonData == null || !jsonData.containsKey('message')){
+        setState(() {
+          _isEnabled = false;
+        });
+        return;
+      }
 
       if(utf8.decode(jsonData['message'].runes.toList()) == '아이디 (이)가 중복 됩니다.'){
         Popup(context, '이미 가입된 아이디 입니다.');
@@ -130,8 +136,8 @@ class _RegisterPageState extends State<RegisterPage> {
         inputID.clear();
         inputPhone.clear();
         inputEmail.clear();
-      } else if(jsonData['success'] == true){
-        print('성공');
+      } else {
+
       }
 
     } else {
@@ -339,30 +345,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ElevatedButton( // 버튼 위젯
                     onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
                       if(inputID.text == '' || inputPhone.text == '' || inputEmail.text == ''){
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              content: Container(
-                                height: 30,
-                                child: FittedBox(
-                                  child: Center(child: Text('아이디와 전화번호, 이메일은 필수로 입력하셔야 합니다.', maxLines: 1))
-                                )
-                              ),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('확인'),
-                                  style: ButtonStyle(
-                                    minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
-                                  ),
-                                )
-                              ]
-                            );
-                          }
-                        );
+                        Popup(context, '아이디와 전화번호, 이메일은 필수로 입력하셔야 합니다.');
                       } else {
                         setState(() {
                           sendEmail();
@@ -396,28 +379,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: ElevatedButton( // 버튼 위젯
                           onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
                             if(inputEmailCheck.text == ''){
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    content: Container(
-                                      height: 25,
-                                      child: Center(child: Text('인증번호를 입력해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17)))
-                                    ),
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: (){
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('확인'),
-                                        style: ButtonStyle(
-                                          minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
-                                        )
-                                      )
-                                    ]
-                                  );
-                                }
-                              );
+                              Popup(context, '인증 번호를 입력해주세요.');
                             } else {
                               setState(() {
                                 checkEmail();
@@ -437,29 +399,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ElevatedButton( // 버튼 위젯
                   onPressed: (){
                     if(inputID.text == '' || inputPW.text == '' || inputCheckPW.text == '' || inputName.text == '' || inputPhone.text == '' || inputEmail.text == ''){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context){
-                          return AlertDialog(
-                            title: Center(child: Text('오류메시지', style: TextStyle(color: Colors.grey))),
-                            content: Container(
-                              height: 30,
-                              child: Center(child: Text('공백 없이 입력해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17))),
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                onPressed: (){
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('확인'),
-                                style: ButtonStyle( // 버튼의 스타일 지정
-                                  minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)) // 버튼의 가로를 최대, 세로는 50
-                                )
-                              )
-                            ]
-                          );
-                        }
-                      );
+                      Popup(context, '공백 없이 입력해주세요.');
+                    } else if(inputPW.text != inputCheckPW.text){
+                      Popup(context, '입력한 비밀번호를 확인해주세요.');
                     } else if (_emailField == false) {
                       showDialog(
                         context: context,
@@ -484,29 +426,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }
                       );
-                    } else if(_emailField == true){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context){
-                          return AlertDialog(
-                            content: Container(
-                              height: 25,
-                              child: Center(child: Text('이메일을 인증해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17)))
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                onPressed: (){
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('확인'),
-                                style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
-                                )
-                              )
-                            ]
-                          );
-                        }
-                      );
+                    } else if(_emailField == true) {
+                      Popup(context, '이메일을 인증해주세요.');
                     }
                   },
                   child: Text('회원가입 신청'),
