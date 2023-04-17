@@ -62,7 +62,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future Popup(BuildContext context, String msg){
-
     return showDialog(
       context: context,
       builder: (BuildContext context){
@@ -165,28 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
           _editCheck = false;
         });
       } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context){
-            return AlertDialog(
-              content: Container(
-                height: 25,
-                child: Center(child: Text('인증번호가 일치하지 않습니다.', style: TextStyle(color: Colors.grey, fontSize: 17)))
-              ),
-              actions: [
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('확인'),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
-                  )
-                )
-              ]
-            );
-          }
-        );
+        Popup(context, '인증번호가 일치하지 않습니다.');
       }
       inputEmailCheck.clear();
     }

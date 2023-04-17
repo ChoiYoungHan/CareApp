@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       if(jsonData['success'] == true){
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
       } else {
-
+        Popup(context, '회원정보가 일치하지 않습니다.');
       }
       inputID.clear();
       inputPW.clear();
@@ -61,6 +61,33 @@ class _LoginPageState extends State<LoginPage> {
 
     }
   }
+
+  // BuildContext와 String 타입의 매개변수를 받아 팝업을 띄움
+  Future Popup(BuildContext context, String msg){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: Container(
+            height: 25,
+            child: Center(child: FittedBox(child: Text(msg, style: TextStyle(color: Colors.grey, fontSize: 17))))
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: Text('확인'),
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+                )
+              )
+            ]
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold( // 상 중 하를 나누는 위젯
@@ -109,34 +136,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton( // 버튼 위젯
                     onPressed: () async { // 버튼을 누를 시 동작할 코드 작성
                       if(inputID.text == '' || inputPW.text == ''){
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              title: Center(child: Text('오류메시지', style: TextStyle(color: Colors.grey))),
-                              content: Container(
-                                height: 30,
-                                child: Center(child: Text('공백 없이 입력해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17))),
-                              ),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('확인'),
-                                  style: ButtonStyle( // 버튼의 스타일 지정
-                                    minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)) // 버튼의 가로를 최대, 세로는 50
-                                  )
-                                )
-                              ]
-                            );
-                          }
-                        );
+                        Popup(context, '공백 없이 입력해주세요.');
                       } else {
                         sendData();
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
                       }
-
                     },
                     child: Text('로그인'), // 텍스트로 '로그인' 출력
                     style: ButtonStyle( // 버튼의 스타일 지정
