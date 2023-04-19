@@ -122,6 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 15), // 좌 20 상 0 우 20 하 15의 여백을 줌
                   child: TextField( // 텍스트 필드 위젯
+                      obscureText: true,
                       controller: inputPW, // 입력받은 값은 변수 inputPW에 저장
                       decoration: InputDecoration( // 디자인
                           hintText: '비밀번호를 입력해주세요',

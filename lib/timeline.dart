@@ -22,7 +22,7 @@ class TimeLine extends StatefulWidget {
 
 class _TimeLineState extends State<TimeLine> {
 
-  List<String> image = ['http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2', 'http://182.219.226.49/image/592dbee4b3756290a8d8b03d3145d521', 'http://182.219.226.49/image/6dcc93eccdd45171cc7422f739abb019', 'http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2', 'http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2'];
+  List<String> image = ['http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2', 'http://182.219.226.49/image/592dbee4b3756290a8d8b03d3145d521', 'http://182.219.226.49/image/592dbee4b3756290a8d8b03d3145d521', 'http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2', 'http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2'];
 
   @override
   Widget build(BuildContext context) {
