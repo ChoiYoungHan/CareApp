@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:care_application/main.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       });
     }
   }
-
+  /*
   Future<void> uploadImages() async {
     String url = 'http://182.219.226.49/upload';
     var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -63,6 +64,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       print('Upload Failed');
     }
   }
+  */
 
   // 비동기 처리를 통해 카메라로 촬영해서 이미지를 가져옴
   Future<void> getCamera() async {
@@ -74,6 +76,28 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       });
     }
   }
+
+  Future<void> DiaryUpload() async {
+    String link = 'http://182.219.226.49/upload/images';
+
+    final Date = '2023-04-23';
+    final Client_Num = 64;
+
+    var request = http.MultipartRequest('POST', Uri.parse(link));
+    request.fields.addAll({'diary_date': Date, 'clientNum': Client_Num.toString()});
+    for(var imageFile in imageList){
+      request.files.add(await http.MultipartFile.fromPath('images', imageFile.path));
+    }
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Uploaded!');
+    } else {
+      print('Upload failed with status ${response.statusCode}');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +117,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
         actions: [ // 우측에 정렬
           TextButton( // 텍스트버튼
             onPressed: (){ // 수행할 코드를 작성
-
+              DiaryUpload();
             }, child: Text('완료', style: TextStyle(color: Colors.orange))) // 텍스트로 '완료' & 주황색
         ]
       ),
@@ -144,7 +168,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                                         onTap: () async { // 한 번 클릭할 경우
                                           await getCamera(); // getCamera() 메소드 호출
                                           if(imageList.isNotEmpty){
-                                            await uploadImages();
+                                            // await uploadImages();
                                           }
                                         },
                                         child: Padding( // 여백을 주기 위해 사용하는 위젯
@@ -175,7 +199,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                                         onTap: () async { // 한 번 클릭할 경우
                                           await getImage(); // getImage() 메소드 호출
                                           if(imageList.isNotEmpty){
-                                            await uploadImages();
+                                            // await uploadImages();
                                           }
                                         },
                                         child: Padding( // 여백을 주기 위해 사용하는 위젯
