@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:care_application/home_page.dart';
+import 'package:care_application/print_diary.dart';
 import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

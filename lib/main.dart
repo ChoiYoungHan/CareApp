@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:care_application/home_page.dart';
 import 'package:care_application/input_diary.dart';
+import 'package:care_application/print_diary.dart';
 import 'package:care_application/timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -159,7 +160,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
                   beforeselectedDate = selectedDay;
                 } else if(beforeselectedDate == selectedDay){ // beforeselectedDate에 이미 선택한 날짜 정보가 저장되어 있을 경우, 선택한 날짜가 두 번 클릭되었다는 것을 의미한다.
                   beforeselectedDate = null; // beforeselectedDate 변수를 null로 설정한다.
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate)));
                 } else {
                   beforeselectedDate = selectedDay;
                 }

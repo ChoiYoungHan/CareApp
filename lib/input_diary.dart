@@ -80,7 +80,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
   Future<void> DiaryUpload() async {
     String link = 'http://182.219.226.49/upload/images';
 
-    final Date = '2023-04-23';
+    final Date = '2022-04-23';
     final Client_Num = 64;
 
     var request = http.MultipartRequest('POST', Uri.parse(link));
@@ -97,6 +97,26 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       print('Upload failed with status ${response.statusCode}');
     }
   }
+
+  Future<void> UploadContent() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/diary/register');
+    final headers = {'Content-Type' : 'application/json'};
+
+    final Date = '2022-04-26';
+    final Client_Num = 64;
+    final Content = inputDiary.text;
+    // clientNum, diary_date, content
+    final body = jsonEncode({'diary_date': Date, 'clientNum': Client_Num, 'content': Content });
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+      print('안녕?');
+      DiaryUpload();
+    } else {
+
+    }
+  }
+
 
 
   @override
@@ -117,7 +137,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
         actions: [ // 우측에 정렬
           TextButton( // 텍스트버튼
             onPressed: (){ // 수행할 코드를 작성
-              DiaryUpload();
+              UploadContent();
             }, child: Text('완료', style: TextStyle(color: Colors.orange))) // 텍스트로 '완료' & 주황색
         ]
       ),
