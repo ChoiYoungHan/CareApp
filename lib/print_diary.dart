@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:care_application/main.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class print_diary extends StatelessWidget {
   final DateTime selectedDate;
@@ -28,11 +32,39 @@ class _printdiary_PageState extends State<printdiary_Page> {
   TextEditingController _controller = TextEditingController();
   String _content = '위 코드에서는 _controller 변수를 TextEditingController 객체로 초기화하고, _defaultText 변수에 기본값을 할당합니다. 그리고 _controller 객체의 text 속성에 _defaultText 값을 할당하여 기본값을 설정합니다. 이후 TextField 위젯의 controller 속성에 _controller 변수를 할당하여 TextField 위젯과 바인딩합니다.';
 
+  Future<void> receiveData() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/diary');
+    final headers = {'Content-Type': 'application/json'};
+
+    final ClientNum = '64';
+    final diary_date = '2022-04-09';
+
+    final body = jsonEncode({'clientNum': ClientNum, 'diary_date': diary_date});
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+
+      var jsonData = jsonDecode(response.body);
+
+      if(jsonData['success'] == true){
+        print(utf8.decode(jsonData['content'].runes.toList()));
+        print(utf8.decode(jsonData['imageURL'].runes.toList()));
+      } else {
+
+      }
+
+    } else {
+
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
     _controller.text = _content;
+
+    receiveData();
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 화면이 밀려 올라가는 것을 방지
@@ -40,7 +72,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
         backgroundColor: Colors.white, // 상단바 배경 흰색
         leading: IconButton(
           onPressed: (){
-
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page()));
           },
           icon: Icon(Icons.arrow_back, color: Colors.grey)
         ),

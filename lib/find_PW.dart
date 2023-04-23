@@ -399,6 +399,7 @@ class _FindPWState extends State<FindPW> {
                             Popup(context, '입력한 비밀번호를 확인해주세요.');
                           } else {
                             changePW();
+
                           }
                         },
                         child: Text('비밀번호 변경'), // 텍스트 위젯, '인증메일 발송' 출력

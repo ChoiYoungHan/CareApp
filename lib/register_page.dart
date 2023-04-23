@@ -86,7 +86,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
   Future<void> sendEmail() async {
     final uri = Uri.parse('http://182.219.226.49/moms/sendemail');
     final headers = {'Content-Type': 'application/json'};

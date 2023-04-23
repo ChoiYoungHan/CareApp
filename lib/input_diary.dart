@@ -80,7 +80,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
   Future<void> DiaryUpload() async {
     String link = 'http://182.219.226.49/upload/images';
 
-    final Date = '2022-04-23';
+    final Date = '2022-04-09';
     final Client_Num = 64;
 
     var request = http.MultipartRequest('POST', Uri.parse(link));
@@ -102,7 +102,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     final uri = Uri.parse('http://182.219.226.49/moms/diary/register');
     final headers = {'Content-Type' : 'application/json'};
 
-    final Date = '2022-04-26';
+    final Date = '2022-04-09';
     final Client_Num = 64;
     final Content = inputDiary.text;
     // clientNum, diary_date, content
@@ -116,8 +116,6 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
 
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
