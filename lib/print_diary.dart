@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:care_application/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class print_diary extends StatelessWidget {
   final DateTime selectedDate;
@@ -30,14 +31,18 @@ class printdiary_Page extends StatefulWidget {
 class _printdiary_PageState extends State<printdiary_Page> {
 
   TextEditingController _controller = TextEditingController();
-  String _content = '위 코드에서는 _controller 변수를 TextEditingController 객체로 초기화하고, _defaultText 변수에 기본값을 할당합니다. 그리고 _controller 객체의 text 속성에 _defaultText 값을 할당하여 기본값을 설정합니다. 이후 TextField 위젯의 controller 속성에 _controller 변수를 할당하여 TextField 위젯과 바인딩합니다.';
+  String _content = '';
 
-  Future<void> receiveData() async {
+  List<String> imageList = [];
+
+
+
+  Future<Response> receiveData() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary');
     final headers = {'Content-Type': 'application/json'};
 
     final ClientNum = '64';
-    final diary_date = '2022-04-09';
+    final diary_date = '2022-04-01';
 
     final body = jsonEncode({'clientNum': ClientNum, 'diary_date': diary_date});
     final response = await http.post(uri, headers: headers, body: body);
@@ -49,6 +54,20 @@ class _printdiary_PageState extends State<printdiary_Page> {
       if(jsonData['success'] == true){
         print(utf8.decode(jsonData['content'].runes.toList()));
         print(utf8.decode(jsonData['imageURL'].runes.toList()));
+        // http://182.219.226.49/image/
+
+        _content = utf8.decode(jsonData['content'].runes.toList());
+
+        _controller.text = _content;
+
+
+        imageList.clear();
+        imageList.addAll(utf8.decode(jsonData['imageURL'].runes.toList()).split('/'));
+        imageList.removeLast();
+
+
+        print(imageList);
+
       } else {
 
       }
@@ -57,14 +76,14 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
     }
 
+    return response;
+
   }
 
   @override
   Widget build(BuildContext context) {
 
     _controller.text = _content;
-
-    receiveData();
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 화면이 밀려 올라가는 것을 방지
@@ -105,24 +124,42 @@ class _printdiary_PageState extends State<printdiary_Page> {
                   )
                 ),
               ), flex: 8),
-              Expanded(child: Container(
-                padding: EdgeInsets.all(5), // 네 면의 여백을 5만큼 줌
-                width: MediaQuery.of(context).size.width * 0.97,
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index){
-                    return Container(
-                      margin: EdgeInsets.all(3),
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      height: MediaQuery.of(context).size.width * 0.3,
-                      child: Image.asset('', fit: BoxFit.cover)
+              FutureBuilder<Response>(
+                future: receiveData(),
+                builder: (context, snapshot){
+                  if(snapshot.hasData){
+                    return Expanded(child: Container(
+                      padding: EdgeInsets.all(5), // 네 면의 여백을 5만큼 줌
+                      width: MediaQuery.of(context).size.width * 0.97,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: imageList.length,
+                          itemBuilder: (context, index){
+                            return Container(
+                                margin: EdgeInsets.all(3),
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                height: MediaQuery.of(context).size.width * 0.3,
+                                child: Image.network('http://182.219.226.49/image/' + imageList[index], fit: BoxFit.cover)
+                            );
+                          }
+                      )
+                    ), flex: 2);
+                  } else {
+                    return Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        width: MediaQuery.of(context).size.width * 0.97,
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: Center(
+                          child: CircularProgressIndicator()
+                        ),
+                      ),
+                      flex: 2,
                     );
                   }
-                ),
-
-              ), flex: 2)
+                }
+              )
             ],
           )
         )
