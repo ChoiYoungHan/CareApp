@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:care_application/home_page.dart';
-import 'package:care_application/print_diary.dart';
 import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       var jsonData = jsonDecode(response.body);
 
       if(jsonData['success'] == true){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(), settings: RouteSettings(arguments: '36')));
       } else {
         Popup(context, '회원정보가 일치하지 않습니다.');
       }
@@ -138,7 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton( // 버튼 위젯
                     onPressed: () async { // 버튼을 누를 시 동작할 코드 작성
                       if(inputID.text == '' || inputPW.text == ''){
-                        Popup(context, '공백 없이 입력해주세요.');
+                        // Popup(context, '공백 없이 입력해주세요.');
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(), settings: RouteSettings(arguments: '36')));
                       } else {
                         sendData();
                       }

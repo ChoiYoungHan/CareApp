@@ -7,15 +7,20 @@ class Home_Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final args = ModalRoute.of(context)?.settings.arguments;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 우측 상단의 debug 리본 제거
-      home: HomePage()
+      home: HomePage(UserNum: args)
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<HomePage> createState() => _HomePageState();
