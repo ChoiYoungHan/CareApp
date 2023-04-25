@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:care_application/home_page.dart';
@@ -7,21 +8,26 @@ import 'package:care_application/timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
-      home: Calendar_Page()
+      home: Calendar_Page(UserNum: args)
     );
   }
 }
 
 class Calendar_Page extends StatefulWidget {
-  const Calendar_Page({Key? key}) : super(key: key);
+  const Calendar_Page({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<Calendar_Page> createState() => _Calendar_PageState();
@@ -31,6 +37,8 @@ class _Calendar_PageState extends State<Calendar_Page> {
 
   late DateTime selectedDate = DateTime.now(); // 현재 날짜를 저장할 변수
   DateTime? beforeselectedDate = null; // 이전에 선택한 날짜를 저장할 변수
+
+  var str;
 
   void showAddAlarm(BuildContext context) async {
     // 선택한 날짜와 시간, 일정 내용을 저장할 변수
@@ -120,6 +128,32 @@ class _Calendar_PageState extends State<Calendar_Page> {
     );
   }
 
+  Future<void> receiveData() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/diary');
+    final headers = {'Content-Type': 'application/json'};
+
+    final ClientNum = widget.UserNum;
+    final diary_date = str;
+
+    final body = jsonEncode({'clientNum': ClientNum, 'diary_date': diary_date});
+    final response = await http.post(uri, headers: headers, body: body);
+    
+    print('clientNum:'+ ClientNum + 'diary_date:'+ diary_date);
+
+    if(response.statusCode == 200){
+
+      var jsonData = jsonDecode(response.body);
+
+      if(jsonData['success'] == true){
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate), settings: RouteSettings(arguments: widget.UserNum)));
+      } else if(jsonData['success'] == false) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate), settings: RouteSettings(arguments: widget.UserNum)));
+      }
+
+    } else {
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +194,12 @@ class _Calendar_PageState extends State<Calendar_Page> {
                   beforeselectedDate = selectedDay;
                 } else if(beforeselectedDate == selectedDay){ // beforeselectedDate에 이미 선택한 날짜 정보가 저장되어 있을 경우, 선택한 날짜가 두 번 클릭되었다는 것을 의미한다.
                   beforeselectedDate = null; // beforeselectedDate 변수를 null로 설정한다.
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate)));
+
+                  str = selectedDate.toString().substring(0, selectedDate.toString().indexOf(' '));
+
+                  receiveData();
+
+
                 } else {
                   beforeselectedDate = selectedDay;
                 }
@@ -197,7 +236,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(), settings: RouteSettings(arguments: widget.UserNum)));
                 },
                 icon: Icon(Icons.home_outlined) // 홈 아이콘
               ),

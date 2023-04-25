@@ -8,21 +8,26 @@ import 'package:http/http.dart';
 class print_diary extends StatelessWidget {
   final DateTime selectedDate;
 
+
   const print_diary({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final args = ModalRoute.of(context)?.settings.arguments;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: printdiary_Page(selectedDate: selectedDate)
+      home: printdiary_Page(selectedDate: selectedDate, UserNum: args)
     );
   }
 }
 
 class printdiary_Page extends StatefulWidget {
-  const printdiary_Page({Key? key, required this.selectedDate}) : super(key: key);
+  const printdiary_Page({Key? key, required this.selectedDate, required this.UserNum}) : super(key: key);
 
   final DateTime selectedDate;
+  final UserNum;
 
   @override
   State<printdiary_Page> createState() => _printdiary_PageState();
@@ -41,8 +46,10 @@ class _printdiary_PageState extends State<printdiary_Page> {
     final uri = Uri.parse('http://182.219.226.49/moms/diary');
     final headers = {'Content-Type': 'application/json'};
 
-    final ClientNum = '64';
-    final diary_date = '2022-04-01';
+    final ClientNum = widget.UserNum;
+    final diary_date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+
+    print(ClientNum + '//' + diary_date);
 
     final body = jsonEncode({'clientNum': ClientNum, 'diary_date': diary_date});
     final response = await http.post(uri, headers: headers, body: body);
@@ -91,7 +98,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
         backgroundColor: Colors.white, // 상단바 배경 흰색
         leading: IconButton(
           onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page(), settings: RouteSettings(arguments: widget.UserNum)));
           },
           icon: Icon(Icons.arrow_back, color: Colors.grey)
         ),

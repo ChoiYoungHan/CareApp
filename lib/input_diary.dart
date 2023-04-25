@@ -10,18 +10,22 @@ class input_diary extends StatelessWidget {
 
   final DateTime selectedDate;
 
+
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
-      home: inputdiary_Page(selectedDate: selectedDate)
+      home: inputdiary_Page(selectedDate: selectedDate, UserNum: args)
     );
   }
 }
 
 class inputdiary_Page extends StatefulWidget {
-  const inputdiary_Page({Key? key, required this.selectedDate}) : super(key: key);
+  const inputdiary_Page({Key? key, required this.selectedDate, required this.UserNum}) : super(key: key);
   final DateTime selectedDate;
+  final UserNum;
 
   @override
   State<inputdiary_Page> createState() => _inputdiary_PageState();
@@ -125,7 +129,8 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
         backgroundColor: Colors.white, // 배경은 흰색
         leading: IconButton( // 좌측에 정렬 & 아이콘 버튼 위젯
           onPressed: (){ // 수행할 코드를 작성
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page())); // Calendar_Page로 이동
+            String userNo = widget.UserNum;
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page(), settings: RouteSettings(arguments: userNo))); // Calendar_Page로 이동
           },
           icon: Icon(Icons.arrow_back, color: Colors.grey) // 아이콘은 뒤로가기 아이콘을 넣으며 색상은 회색
         ),

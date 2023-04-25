@@ -51,7 +51,10 @@ class _LoginPageState extends State<LoginPage> {
       var jsonData = jsonDecode(response.body);
 
       if(jsonData['success'] == true){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(), settings: RouteSettings(arguments: '36')));
+        String UserNum = jsonData['cnum'].toString();
+        print(UserNum);
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(), settings: RouteSettings(arguments: UserNum)));
       } else {
         Popup(context, '회원정보가 일치하지 않습니다.');
       }
@@ -137,8 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton( // 버튼 위젯
                     onPressed: () async { // 버튼을 누를 시 동작할 코드 작성
                       if(inputID.text == '' || inputPW.text == ''){
-                        // Popup(context, '공백 없이 입력해주세요.');
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(), settings: RouteSettings(arguments: '36')));
+                        Popup(context, '공백 없이 입력해주세요.');
                       } else {
                         sendData();
                       }

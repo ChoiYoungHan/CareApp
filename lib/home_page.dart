@@ -29,7 +29,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   int exist = 1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold( // 상 중 하를 나누는 위젯
@@ -178,7 +177,7 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(), settings: RouteSettings(arguments: widget.UserNum)));
                 },
                 icon: Icon(Icons.event_note_outlined)
             ),
