@@ -32,7 +32,7 @@ class _TimeLineState extends State<TimeLine> {
         backgroundColor: Colors.white, // 배경은 흰색
         leading: IconButton( // 아이콘 버튼 위젯
           onPressed: (){ // 아이콘 클릭 시 동작할 코드 구현
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
           },
           icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
         ),
