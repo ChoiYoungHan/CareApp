@@ -50,29 +50,12 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
   Future<void> getImage() async {
     final List<XFile> images = await picker.pickMultiImage();
     if(images != null){
+      Navigator.of(context).pop();
       setState(() {
         imageList = images;
       });
     }
   }
-  /*
-  Future<void> uploadImages() async {
-    String url = 'http://182.219.226.49/upload';
-    var request = http.MultipartRequest('POST', Uri.parse(url));
-    for(var imageFile in imageList){
-      request.files.add(await http.MultipartFile.fromPath('images', imageFile.path));
-    }
-
-    var response = await request.send();
-
-    if(response.statusCode == 200){
-      print('Image Upload');
-      imageList.clear(); // 이미지 업로드가 성공하면 배열을 초기화
-    } else {
-      print('Upload Failed');
-    }
-  }
-  */
 
   // 비동기 처리를 통해 카메라로 촬영해서 이미지를 가져옴
   Future<void> getCamera() async {
@@ -111,8 +94,6 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
 
     var response = await request.send();
 
-
-
     if (response.statusCode == 200) {
       print('Uploaded!');
       Navigator.of(context, rootNavigator: true).pop();
@@ -122,7 +103,6 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       print('Upload failed with status ${response.statusCode}');
     }
   }
-
 
   Future<void> UploadContent() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary/register');

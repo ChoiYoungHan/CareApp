@@ -40,8 +40,6 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
   List<String> imageList = [];
 
-
-
   Future<Response> receiveData() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary');
     final headers = {'Content-Type': 'application/json'};
@@ -122,7 +120,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                     padding: EdgeInsets.all(5),
                     child: TextField(
                         controller: _controller,
-                        maxLines: 23,
+                        maxLines: null,
                         enabled: false,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(

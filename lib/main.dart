@@ -169,7 +169,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
             actions: [ // 상단바의 우측에 출력
               IconButton( // 아이콘 버튼 위젯
                   onPressed: (){ // 아이콘을 클릭할 경우에 동작할 코드
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Time_Line()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Time_Line(userNum: widget.UserNum)));
                   },
                   icon: Icon(Icons.view_timeline_outlined, color: Colors.orange) // 타임라인 아이콘, 색상은 주황
               ),
