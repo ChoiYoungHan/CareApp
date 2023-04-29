@@ -43,8 +43,16 @@ class _TimeLineState extends State<TimeLine> {
 
       var jsonData = jsonDecode(response.body);
       print('타임라인 요청 성공');
-      print(utf8.decode(jsonData['diary_date'].runes.toList()));
-      print(utf8.decode(jsonData['imageURL'].runes.toList()));
+
+      if (jsonData['success'] == true) {
+        List<dynamic> dataList = jsonData['data'];
+        for (var data in dataList) {
+          String diaryDate = data['diary_date'].toString();
+          String imageURL = data['imageURL'].toString();
+          print(diaryDate);
+          print(imageURL);
+        }
+      }
 
     } else {
 

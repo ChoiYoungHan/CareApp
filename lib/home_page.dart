@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:care_application/main.dart';
 import 'package:care_application/week_info.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Home_Page extends StatelessWidget {
   const Home_Page({Key? key, required this.userNum}) : super(key: key);
@@ -27,6 +30,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  var babyname, week;
+
+  Future<void> receiveWeek() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/pregnancy-week');
+    final headers = {'Content-Type' : 'application/json'};
+
+    final clientNum = widget.UserNum;
+
+    final body = jsonEncode({'clientNum': clientNum});
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+      var jsonData = jsonDecode(response.body);
+
+      print(utf8.decode(jsonData['babyname'].runes.toList()));
+      print(utf8.decode(jsonData['expecteddate'].runes.toList()));
+      print(utf8.decode(jsonData['week'].runes.toList()));
+
+      babyname = utf8.decode(jsonData['babyname'].runes.toList());
+      week = utf8.decode(jsonData['week'].runes.toList());
+    }
+  }
+
 
   int exist = 1;
   @override
@@ -66,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('메리의', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                Text(babyname + '의', style: TextStyle(color: Colors.grey, fontSize: 25)),
                                                 SizedBox(height: 5),
                                                 Text('출산까지', style: TextStyle(color: Colors.grey, fontSize: 25)),
                                                 SizedBox(height: 5),
