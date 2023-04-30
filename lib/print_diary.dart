@@ -65,11 +65,9 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
         _controller.text = _content;
 
-
         imageList.clear();
         imageList.addAll(utf8.decode(jsonData['imageURL'].runes.toList()).split('/'));
         imageList.removeLast();
-
 
         print(imageList);
 

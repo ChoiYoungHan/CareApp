@@ -30,6 +30,9 @@ class _TimeLineState extends State<TimeLine> {
 
   List<String> image = ['http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e'];
 
+  List<String> Diary_Date = [];
+  List<String> Image_URL = [];
+
   Future<void> receiveTimeLine() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary/timeline');
     final headers = {'Content-Type': 'application/json'};
@@ -44,15 +47,28 @@ class _TimeLineState extends State<TimeLine> {
       var jsonData = jsonDecode(response.body);
       print('타임라인 요청 성공');
 
+      /*
       if (jsonData['success'] == true) {
-        List<dynamic> dataList = jsonData['data'];
+        List<dynamic> dataList = jsonData[0]['data'];
         for (var data in dataList) {
-          String diaryDate = data['diary_date'].toString();
-          String imageURL = data['imageURL'].toString();
+          String diaryDate = data[0]['diary_date'].toString();
+          String imageURL = data[0]['imageURL'].toString();
           print(diaryDate);
           print(imageURL);
         }
       }
+      */
+      print(jsonData[2]['DIARY_DATE']);
+      print(jsonData[1]['IMAGEURL']);
+      print(jsonData);
+
+      jsonData.forEach((element){
+        Diary_Date.add(element['DIARY_DATE']);
+        Image_URL.add(element['IMAGEURL']);
+      });
+
+      print(Diary_Date);
+      print(Image_URL);
 
     } else {
 
