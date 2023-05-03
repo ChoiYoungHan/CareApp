@@ -64,13 +64,9 @@ class _HomePageState extends State<HomePage> {
         print('비어있습니다.');
         exist = '0';
       }
-
     }
-
     return response;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -117,13 +113,13 @@ class _HomePageState extends State<HomePage> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text(babyname.toString() + '의', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      FittedBox(child: Text(babyname.toString() + '와', style: TextStyle(color: Colors.grey, fontSize: 25))),
                                                       SizedBox(height: 5),
-                                                      Text('출산까지', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 25))),
                                                       SizedBox(height: 5),
-                                                      Text(dday.toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30)),
+                                                      FittedBox(child: Text(dday.toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30))),
                                                       SizedBox(height: 5),
-                                                      Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25))),
                                                     ]
                                                 ),
                                               )
@@ -162,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info()));
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
@@ -188,25 +184,30 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding( // 여백을 주기 위해 사용하는 위젯
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                                      child: Container( // 상자 위젯
-                                          width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
-                                          height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%만큼 높이를 줌
-                                          decoration: BoxDecoration( // 박스 디자인
-                                              border: Border.all(color: Colors.grey, width: 2) // 테두리 회색, 두께 2
-                                          ),
-                                          child: Column( // 세로 정렬
-                                              children: [
-                                                Padding( // 여백을 주기 위해 사용하는 위젯
-                                                    padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                                                    child: Image.asset('assets/week_mother.png', // 이미지 불러오기
-                                                        width: MediaQuery.of(context).size.width * 0.35, // 화면 가로 길이의 35%만큼 너비를 줌
-                                                        height: MediaQuery.of(context).size.height * 0.15, // 화면 세로 길이의 15%만큼 높이를 줌
-                                                        color: Colors.grey // 색상은 회색
-                                                    )
-                                                ),
-                                                Text('이번주 엄마는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색 회색, 크기 20, 볼드체
-                                              ]
-                                          )
+                                      child: InkWell(
+                                        onTap: (){
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum)));
+                                        },
+                                        child: Container( // 상자 위젯
+                                            width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
+                                            height: MediaQuery.of(context).size.height * 0.25, // 화면 세로 길이의 25%만큼 높이를 줌
+                                            decoration: BoxDecoration( // 박스 디자인
+                                                border: Border.all(color: Colors.grey, width: 2) // 테두리 회색, 두께 2
+                                            ),
+                                            child: Column( // 세로 정렬
+                                                children: [
+                                                  Padding( // 여백을 주기 위해 사용하는 위젯
+                                                      padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                                                      child: Image.asset('assets/week_mother.png', // 이미지 불러오기
+                                                          width: MediaQuery.of(context).size.width * 0.35, // 화면 가로 길이의 35%만큼 너비를 줌
+                                                          height: MediaQuery.of(context).size.height * 0.15, // 화면 세로 길이의 15%만큼 높이를 줌
+                                                          color: Colors.grey // 색상은 회색
+                                                      )
+                                                  ),
+                                                  Text('이번주 엄마는?', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 글자색 회색, 크기 20, 볼드체
+                                                ]
+                                            )
+                                        ),
                                       )
                                   )
                                 ]
