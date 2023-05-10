@@ -29,9 +29,6 @@ class TimeLine extends StatefulWidget {
 }
 
 class _TimeLineState extends State<TimeLine> {
-
-  List<String> image = ['http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e', 'http://182.219.226.49/image/58a8a0784e211fc26a6904852c75ac6e'];
-
   List<String> Diary_Date = [];
   List<String> Image_URL = [];
 
@@ -54,10 +51,6 @@ class _TimeLineState extends State<TimeLine> {
         Diary_Date.add(element['DIARY_DATE']);
         Image_URL.add(element['IMAGEURL']);
       });
-
-      print(Diary_Date);
-      print(Image_URL);
-
     } else {
 
     }

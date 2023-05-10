@@ -34,6 +34,11 @@ class _HomePageState extends State<HomePage> {
 
   var babyname, week, dday, exist;
 
+  List<String> b_babyname = [];
+  List<String> b_expecteddate = [];
+  List<String> b_dday = [];
+  List<String> b_week = [];
+
   Future<Response> receiveWeek() async {
 
     final uri = Uri.parse('http://182.219.226.49/moms/pregnancy-week');
@@ -48,6 +53,24 @@ class _HomePageState extends State<HomePage> {
       var jsonData = jsonDecode(response.body);
 
       if(jsonData != null){
+
+        b_babyname.clear();
+        b_expecteddate.clear();
+        b_dday.clear();
+        b_week.clear();
+
+        jsonData.forEach((element){
+          b_babyname.add(element['babyname']);
+          b_expecteddate.add(element['expecteddate']);
+          b_dday.add(element['dday']);
+          b_week.add(element['week']);
+        });
+
+        print(b_babyname);
+        print(b_expecteddate);
+        print(b_dday);
+        print(b_week);
+
 
         print(utf8.decode(jsonData[0]['babyname'].runes.toList()));
         print(utf8.decode(jsonData[0]['expecteddate'].runes.toList()));
